@@ -1,0 +1,1437 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Cell University of Lucknow</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+    .heading-font {
+      font-family: 'Poppins', sans-serif;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.2); }
+      50% { box-shadow: 0 0 30px rgba(37, 99, 235, 0.4); }
+    }
+    @keyframes slide-up {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    .pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+    .slide-up {
+      animation: slide-up 0.6s ease-out forwards;
+    }
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-8px) scale(1.02);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #2563EB;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+    .graph-pattern {
+      background-color: #0F172A;
+      background-image: 
+        linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .graph-pattern-light {
+      background-color: #F8FAFC;
+      background-image: 
+        linear-gradient(rgba(37, 99, 235, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.08) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-content {
+      background: white;
+      border-radius: 24px;
+      max-width: 900px;
+      width: 100%;
+      max-height: 90%;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+    .alert-box {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: white;
+      border-radius: 16px;
+      padding: 20px 24px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      z-index: 2000;
+      min-width: 320px;
+      animation: slideIn 0.3s ease-out;
+      border-left: 4px solid #10B981;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(400px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .photo-carousel {
+      display: flex;
+      gap: 12px;
+      animation: scroll-horizontal 30s linear infinite;
+      width: fit-content;
+    }
+    .photo-carousel-container {
+      overflow: hidden;
+      position: relative;
+      border-radius: 0;
+    }
+    @keyframes scroll-horizontal {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .photo-carousel:hover {
+      animation-play-state: paused;
+    }
+    .photo-item {
+      flex-shrink: 0;
+      width: 280px;
+      height: 200px;
+      border-radius: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Light mode styles */
+    body.light-mode {
+      background-color: #F8FAFC;
+    }
+    body.light-mode .graph-pattern {
+      background-color: #F8FAFC;
+      background-image: 
+        linear-gradient(rgba(37, 99, 235, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.08) 1px, transparent 1px);
+    }
+    body.light-mode #navbar {
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom-color: #E2E8F0;
+    }
+    body.light-mode #logo-text,
+    body.light-mode .nav-link {
+      color: #1E293B;
+    }
+    body.light-mode .nav-link:hover {
+      color: #2563EB;
+    }
+    body.light-mode #theme-toggle {
+      background: #F1F5F9;
+    }
+    body.light-mode #theme-toggle:hover {
+      background: #E2E8F0;
+    }
+    body.light-mode h1,
+    body.light-mode h2,
+    body.light-mode h3,
+    body.light-mode h4 {
+      color: #1E293B;
+    }
+    body.light-mode p,
+    body.light-mode span {
+      color: #475569;
+    }
+    body.light-mode .card-bg {
+      background: rgba(255, 255, 255, 0.8);
+      border-color: #E2E8F0;
+    }
+    body.light-mode .text-white {
+      color: #1E293B !important;
+    }
+    body.light-mode .text-gray-300 {
+      color: #64748B !important;
+    }
+    body.light-mode .text-gray-400 {
+      color: #94A3B8 !important;
+    }
+    body.light-mode .bg-slate-800\/50 {
+      background: rgba(255, 255, 255, 0.8) !important;
+      border-color: #E2E8F0 !important;
+    }
+    body.light-mode .border-slate-700 {
+      border-color: #E2E8F0 !important;
+    }
+    body.light-mode footer {
+      background: rgba(255, 255, 255, 0.95) !important;
+      border-top-color: #E2E8F0 !important;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full overflow-auto graph-pattern"><!-- Navigation -->
+  <nav class="sticky top-0 z-50 backdrop-blur-md bg-slate-900/95 shadow-lg border-b border-slate-700" id="navbar">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+     <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-lg flex items-center justify-center pulse-glow" style="background: linear-gradient(135deg, #2563EB, #7C3AED);">
+       <svg class="w-6 h-6 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+       </svg>
+      </div><span class="heading-font text-xl font-bold text-white" id="logo-text">E-Cell UoL</span>
+     </div>
+     <div class="flex items-center gap-6">
+      <div class="flex gap-8"><button onclick="showPage('alumni')" id="nav-alumni" class="nav-link text-gray-300 hover:text-white font-medium transition-colors active">Alumni Connect</button> <button onclick="showPage('gallery')" id="nav-gallery" class="nav-link text-gray-300 hover:text-white font-medium transition-colors">Gallery</button>
+      </div><button onclick="toggleTheme()" id="theme-toggle" class="w-10 h-10 rounded-lg flex items-center justify-center transition-all hover:scale-110 bg-slate-800 hover:bg-slate-700" title="Toggle theme">
+       <svg id="sun-icon" class="w-5 h-5 text-yellow-400 hidden" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
+       </svg>
+       <svg id="moon-icon" class="w-5 h-5 text-blue-300" fill="currentColor" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+       </svg></button>
+     </div>
+    </div>
+   </div>
+  </nav><!-- Hero Section -->
+  <header class="relative py-16 px-4 text-center overflow-hidden">
+   <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute top-10 left-10 w-72 h-72 rounded-full opacity-10 blur-3xl" style="background: #2563EB;"></div>
+    <div class="absolute bottom-10 right-10 w-96 h-96 rounded-full opacity-10 blur-3xl" style="background: #7C3AED;"></div>
+   </div>
+   <div class="relative z-10 max-w-4xl mx-auto">
+    <h1 class="heading-font text-5xl md:text-6xl font-bold text-white mb-4 slide-up">E-Cell <span class="gradient-text">University of Lucknow</span></h1>
+    <p class="text-xl text-gray-300 mb-8 slide-up" style="animation-delay: 0.2s;">Empowering Student Entrepreneurs | Building Tomorrow's Leaders</p>
+    <div class="flex justify-center gap-4 flex-wrap slide-up" style="animation-delay: 0.4s;">
+     <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm shadow-md border border-white/20"><span class="text-2xl">🚀</span> <span class="text-gray-200 font-medium">Innovation</span>
+     </div>
+     <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm shadow-md border border-white/20"><span class="text-2xl">💡</span> <span class="text-gray-200 font-medium">Ideas</span>
+     </div>
+     <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm shadow-md border border-white/20"><span class="text-2xl">🌟</span> <span class="text-gray-200 font-medium">Success</span>
+     </div>
+    </div>
+   </div>
+  </header><!-- Alumni Connect Page -->
+  <main id="alumni-page" class="max-w-7xl mx-auto px-4 pb-16">
+   <section class="mb-12">
+    <div class="text-center mb-12">
+     <h2 class="heading-font text-4xl font-bold text-white mb-4">Connect with <span class="gradient-text">Alumni Mentors</span></h2>
+     <p class="text-gray-300 max-w-2xl mx-auto">Get guidance from successful alumni who have walked the entrepreneurial path.</p>
+    </div><!-- Alumni Stats Bar -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+     <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-slate-700 text-center card-bg">
+      <p class="text-3xl font-bold text-blue-400 mb-1">150+</p>
+      <p class="text-gray-300 text-sm">Active Mentors</p>
+     </div>
+     <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-slate-700 text-center card-bg">
+      <p class="text-3xl font-bold text-purple-400 mb-1">300+</p>
+      <p class="text-gray-300 text-sm">Mentorship Sessions</p>
+     </div>
+     <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-slate-700 text-center card-bg">
+      <p class="text-3xl font-bold text-blue-400 mb-1">25+</p>
+      <p class="text-gray-300 text-sm">Startups Launched</p>
+     </div>
+     <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-slate-700 text-center card-bg">
+      <p class="text-3xl font-bold text-purple-400 mb-1">₹5Cr+</p>
+      <p class="text-gray-300 text-sm">Funding Raised</p>
+     </div>
+    </div><!-- Alumni Cards -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Alumni Card 1 -->
+     <div class="card-hover rounded-2xl p-6 relative overflow-hidden bg-slate-800/50 backdrop-blur-sm shadow-md border border-slate-700">
+      <div class="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10 blur-2xl" style="background: #2563EB;"></div>
+      <div class="relative">
+       <div class="flex items-start gap-4 mb-4">
+        <div class="w-16 h-16 rounded-xl flex items-center justify-center text-3xl float-animation" style="background: linear-gradient(135deg, #2563EB, #7C3AED);">
+         👨‍💼
+        </div>
+        <div class="flex-1">
+         <div class="flex items-center gap-2 mb-1">
+          <h3 class="text-white font-bold text-lg">Rahul Sharma</h3><a href="https://linkedin.com/in/rahulsharma-uol19" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300">
+           <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+           </svg></a>
+         </div>
+         <p class="text-blue-400 text-sm font-medium">Batch 2019 • Tech Lead @ Google</p>
+        </div>
+       </div>
+       <p class="text-gray-300 text-sm mb-4">"Focus on solving real problems. The best startups emerge from genuine needs."</p>
+       <div class="flex flex-wrap gap-2 mb-4"><span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-300">Tech Startups</span> <span class="px-3 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-300">Product Dev</span>
+       </div><button onclick="requestMentorship('Rahul Sharma')" class="w-full py-3 rounded-xl font-semibold text-white transition-all hover:scale-105" style="background: linear-gradient(135deg, #2563EB, #7C3AED);"> 💬 Request Mentorship </button>
+      </div>
+     </div><!-- Alumni Card 2 -->
+     <div class="card-hover rounded-2xl p-6 relative overflow-hidden bg-slate-800/50 backdrop-blur-sm shadow-md border border-slate-700">
+      <div class="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10 blur-2xl" style="background: #7C3AED;"></div>
+      <div class="relative">
+       <div class="flex items-start gap-4 mb-4">
+        <div class="w-16 h-16 rounded-xl flex items-center justify-center text-3xl float-animation" style="background: linear-gradient(135deg, #7C3AED, #2563EB); animation-delay: 0.5s;">
+         👩‍💻
+        </div>
+        <div class="flex-1">
+         <div class="flex items-center gap-2 mb-1">
+          <h3 class="text-white font-bold text-lg">Priya Verma</h3><a href="https://linkedin.com/in/priyaverma-uol18" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300">
+           <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+           </svg></a>
+         </div>
+         <p class="text-blue-400 text-sm font-medium">Batch 2018 • Founder @ EduTech Pro</p>
+        </div>
+       </div>
+       <p class="text-gray-300 text-sm mb-4">"Network is everything. Attend events, connect with people, and never stop learning."</p>
+       <div class="flex flex-wrap gap-2 mb-4"><span class="px-3 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-300">EdTech</span> <span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-300">Fundraising</span>
+       </div><button onclick="requestMentorship('Priya Verma')" class="w-full py-3 rounded-xl font-semibold text-white transition-all hover:scale-105" style="background: linear-gradient(135deg, #2563EB, #7C3AED);"> 💬 Request Mentorship </button>
+      </div>
+     </div><!-- Alumni Card 3 -->
+     <div class="card-hover rounded-2xl p-6 relative overflow-hidden bg-slate-800/50 backdrop-blur-sm shadow-md border border-slate-700">
+      <div class="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10 blur-2xl" style="background: #2563EB;"></div>
+      <div class="relative">
+       <div class="flex items-start gap-4 mb-4">
+        <div class="w-16 h-16 rounded-xl flex items-center justify-center text-3xl float-animation" style="background: linear-gradient(135deg, #2563EB, #7C3AED); animation-delay: 1s;">
+         👨‍🔬
+        </div>
+        <div class="flex-1">
+         <div class="flex items-center gap-2 mb-1">
+          <h3 class="text-white font-bold text-lg">Amit Kumar</h3><a href="https://linkedin.com/in/amitkumar-uol17" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300">
+           <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+           </svg></a>
+         </div>
+         <p class="text-blue-400 text-sm font-medium">Batch 2017 • CTO @ FinNext</p>
+        </div>
+       </div>
+       <p class="text-gray-300 text-sm mb-4">"Build MVPs fast, validate quickly. Don't spend months building something nobody wants."</p>
+       <div class="flex flex-wrap gap-2 mb-4"><span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-300">FinTech</span> <span class="px-3 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-300">Blockchain</span>
+       </div><button onclick="requestMentorship('Amit Kumar')" class="w-full py-3 rounded-xl font-semibold text-white transition-all hover:scale-105" style="background: linear-gradient(135deg, #2563EB, #7C3AED);"> 💬 Request Mentorship </button>
+      </div>
+     </div><!-- Alumni Card 4 -->
+     <div class="card-hover rounded-2xl p-6 relative overflow-hidden bg-slate-800/50 backdrop-blur-sm shadow-md border border-slate-700">
+      <div class="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10 blur-2xl" style="background: #7C3AED;"></div>
+      <div class="relative">
+       <div class="flex items-start gap-4 mb-4">
+        <div class="w-16 h-16 rounded-xl flex items-center justify-center text-3xl float-animation" style="background: linear-gradient(135deg, #7C3AED, #2563EB); animation-delay: 1.5s;">
+         👩‍🎨
+        </div>
+        <div class="flex-1">
+         <div class="flex items-center gap-2 mb-1">
+          <h3 class="text-white font-bold text-lg">Sneha Gupta</h3><a href="https://linkedin.com/in/snehagupta-uol20" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300">
+           <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+           </svg></a>
+         </div>
+         <p class="text-blue-400 text-sm font-medium">Batch 2020 • Design Lead @ Flipkart</p>
+        </div>
+       </div>
+       <p class="text-gray-300 text-sm mb-4">"User experience is everything. Talk to your users every week and iterate."</p>
+       <div class="flex flex-wrap gap-2 mb-4"><span class="px-3 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-300">UX Design</span> <span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-300">Branding</span>
+       </div><button onclick="requestMentorship('Sneha Gupta')" class="w-full py-3 rounded-xl font-semibold text-white transition-all hover:scale-105" style="background: linear-gradient(135deg, #2563EB, #7C3AED);"> ��� Request Mentorship </button>
+      </div>
+     </div><!-- Alumni Card 5 -->
+     <div class="card-hover rounded-2xl p-6 relative overflow-hidden bg-slate-800/50 backdrop-blur-sm shadow-md border border-slate-700">
+      <div class="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10 blur-2xl" style="background: #2563EB;"></div>
+      <div class="relative">
+       <div class="flex items-start gap-4 mb-4">
+        <div class="w-16 h-16 rounded-xl flex items-center justify-center text-3xl float-animation" style="background: linear-gradient(135deg, #2563EB, #7C3AED); animation-delay: 2s;">
+         👨‍💻
+        </div>
+        <div class="flex-1">
+         <div class="flex items-center gap-2 mb-1">
+          <h3 class="text-white font-bold text-lg">Vikash Singh</h3><a href="https://linkedin.com/in/vikashsingh-uol16" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300">
+           <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+           </svg></a>
+         </div>
+         <p class="text-blue-400 text-sm font-medium">Batch 2016 • Founder @ AgriSmart</p>
+        </div>
+       </div>
+       <p class="text-gray-300 text-sm mb-4">"India has unique problems. The best opportunities are hiding in plain sight."</p>
+       <div class="flex flex-wrap gap-2 mb-4"><span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-300">AgriTech</span> <span class="px-3 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-300">IoT</span>
+       </div><button onclick="requestMentorship('Vikash Singh')" class="w-full py-3 rounded-xl font-semibold text-white transition-all hover:scale-105" style="background: linear-gradient(135deg, #2563EB, #7C3AED);"> 💬 Request Mentorship </button>
+      </div>
+     </div><!-- Alumni Card 6 -->
+     <div class="card-hover rounded-2xl p-6 relative overflow-hidden bg-slate-800/50 backdrop-blur-sm shadow-md border border-slate-700">
+      <div class="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10 blur-2xl" style="background: #7C3AED;"></div>
+      <div class="relative">
+       <div class="flex items-start gap-4 mb-4">
+        <div class="w-16 h-16 rounded-xl flex items-center justify-center text-3xl float-animation" style="background: linear-gradient(135deg, #7C3AED, #2563EB); animation-delay: 2.5s;">
+         👩‍⚖️
+        </div>
+        <div class="flex-1">
+         <div class="flex items-center gap-2 mb-1">
+          <h3 class="text-white font-bold text-lg">Ananya Mishra</h3><a href="https://linkedin.com/in/ananyamishra-uol19" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300">
+           <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+           </svg></a>
+         </div>
+         <p class="text-blue-400 text-sm font-medium">Batch 2019 • Co-founder @ LegalTech India</p>
+        </div>
+       </div>
+       <p class="text-gray-300 text-sm mb-4">"Don't be afraid of regulated industries. Bring technology where it's needed most."</p>
+       <div class="flex flex-wrap gap-2 mb-4"><span class="px-3 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-300">LegalTech</span> <span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-300">B2B SaaS</span>
+       </div><button onclick="requestMentorship('Ananya Mishra')" class="w-full py-3 rounded-xl font-semibold text-white transition-all hover:scale-105" style="background: linear-gradient(135deg, #2563EB, #7C3AED);"> 💬 Request Mentorship </button>
+      </div>
+     </div><!-- Join as Alumni Card -->
+     <div onclick="openRegistrationForm()" class="card-hover rounded-2xl p-6 flex flex-col items-center justify-center text-center bg-gradient-to-br from-blue-600/20 to-purple-600/20 border-2 border-dashed border-blue-400 cursor-pointer">
+      <div class="w-20 h-20 rounded-full flex items-center justify-center mb-4 bg-slate-800/50 backdrop-blur-sm shadow-md"><span class="text-4xl">🎓</span>
+      </div>
+      <h3 class="text-white font-bold text-lg mb-2">Are You an Alumni?</h3>
+      <p class="text-gray-300 text-sm mb-4">Join our mentor network!</p><button class="px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105 bg-slate-800/50 backdrop-blur-sm border-2 border-blue-400 text-blue-400 hover:bg-blue-600 hover:text-white hover:border-blue-600"> ➕ Register as Mentor </button>
+     </div>
+    </div>
+   </section>
+  </main><!-- Gallery Page -->
+  <main id="gallery-page" class="max-w-7xl mx-auto px-4 pb-16 hidden">
+   <section>
+    <div class="text-center mb-8">
+     <h2 class="heading-font text-4xl font-bold text-white mb-4">Event <span class="gradient-text">Gallery</span></h2>
+     <p class="text-gray-300 max-w-2xl mx-auto mb-6">Relive the moments from our flagship events.</p><!-- Download Brochure Button --> <button onclick="downloadBrochure()" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white transition-all hover:scale-105 shadow-lg" style="background: linear-gradient(135deg, #2563EB, #7C3AED);">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg> Download E-Cell Brochure </button>
+    </div><!-- Event Gallery with Photo Carousels -->
+    <div class="space-y-8"><!-- Event 1: Nirman 1.0 -->
+     <div onclick="openEventDetails('nirman')" class="rounded-2xl overflow-hidden bg-slate-800/50 backdrop-blur-sm shadow-md border border-slate-700 cursor-pointer hover:border-blue-500 transition-all">
+      <div class="photo-carousel-container">
+       <div class="photo-carousel">
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=280&amp;h=200&amp;fit=crop" alt="Opening Ceremony" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Opening Ceremony</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=280&amp;h=200&amp;fit=crop" alt="Pitch Presentations" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Pitch Presentations</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=280&amp;h=200&amp;fit=crop" alt="Team Huddles" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Team Huddles</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1560439513-74b037a25d84?w=280&amp;h=200&amp;fit=crop" alt="Winners Announcement" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Winners Announcement</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=280&amp;h=200&amp;fit=crop" alt="Networking Sessions" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Networking Sessions</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=280&amp;h=200&amp;fit=crop" alt="Group Photo" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Group Photo</p>
+         </div>
+        </div><!-- Duplicate for seamless loop -->
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=280&amp;h=200&amp;fit=crop" alt="Opening Ceremony" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Opening Ceremony</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=280&amp;h=200&amp;fit=crop" alt="Pitch Presentations" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Pitch Presentations</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=280&amp;h=200&amp;fit=crop" alt="Team Huddles" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Team Huddles</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1560439513-74b037a25d84?w=280&amp;h=200&amp;fit=crop" alt="Winners Announcement" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Winners Announcement</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=280&amp;h=200&amp;fit=crop" alt="Networking Sessions" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Networking Sessions</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=280&amp;h=200&amp;fit=crop" alt="Group Photo" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Group Photo</p>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="p-6">
+       <div class="flex items-center gap-2 mb-3"><span class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-white">🔥 FLAGSHIP EVENT</span>
+       </div>
+       <h4 class="text-white font-bold text-2xl mb-2">Nirman 1.0</h4>
+       <p class="text-gray-300 text-sm mb-4">Premier startup pitch competition with 200+ participants and ₹50,000 prize pool.</p>
+       <div class="flex items-center justify-between text-sm"><span class="text-gray-400">📅 March 2024</span>
+       </div>
+      </div>
+     </div><!-- Event 2: E-Summit 2024 -->
+     <div onclick="openEventDetails('esummit')" class="rounded-2xl overflow-hidden bg-slate-800/50 backdrop-blur-sm shadow-md border border-slate-700 cursor-pointer hover:border-blue-500 transition-all">
+      <div class="photo-carousel-container">
+       <div class="photo-carousel">
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=280&amp;h=200&amp;fit=crop" alt="Keynote Sessions" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Keynote Sessions</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1559223607-a43c990c8f82?w=280&amp;h=200&amp;fit=crop" alt="Startup Expo" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Startup Expo</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=280&amp;h=200&amp;fit=crop" alt="Panel Discussions" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Panel Discussions</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1464047736614-af63643285bf?w=280&amp;h=200&amp;fit=crop" alt="Awards Ceremony" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Awards Ceremony</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1528605105345-5344ea20e269?w=280&amp;h=200&amp;fit=crop" alt="Meet &amp; Greet" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Meet &amp; Greet</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=280&amp;h=200&amp;fit=crop" alt="Closing Night" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Closing Night</p>
+         </div>
+        </div><!-- Duplicate -->
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=280&amp;h=200&amp;fit=crop" alt="Keynote Sessions" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Keynote Sessions</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1559223607-a43c990c8f82?w=280&amp;h=200&amp;fit=crop" alt="Startup Expo" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Startup Expo</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=280&amp;h=200&amp;fit=crop" alt="Panel Discussions" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Panel Discussions</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1464047736614-af63643285bf?w=280&amp;h=200&amp;fit=crop" alt="Awards Ceremony" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Awards Ceremony</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1528605105345-5344ea20e269?w=280&amp;h=200&amp;fit=crop" alt="Meet &amp; Greet" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Meet &amp; Greet</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=280&amp;h=200&amp;fit=crop" alt="Closing Night" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Closing Night</p>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="p-6">
+       <div class="flex items-center gap-2 mb-3"><span class="px-3 py-1 rounded-full text-xs font-medium bg-orange-500/20 text-orange-300">Annual Summit</span>
+       </div>
+       <h4 class="text-white font-bold text-2xl mb-2">E-Summit 2024</h4>
+       <p class="text-gray-300 text-sm mb-4">Three-day entrepreneurship summit with keynote speakers and startup expo.</p>
+       <div class="flex items-center justify-between text-sm"><span class="text-gray-400">📅 February 2024</span>
+       </div>
+      </div>
+     </div><!-- Event 3: C-Wrap 2024 -->
+     <div onclick="openEventDetails('cwrap')" class="rounded-2xl overflow-hidden bg-slate-800/50 backdrop-blur-sm shadow-md border border-slate-700 cursor-pointer hover:border-blue-500 transition-all">
+      <div class="photo-carousel-container">
+       <div class="photo-carousel">
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=280&amp;h=200&amp;fit=crop" alt="Case Study Rounds" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Case Study Rounds</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=280&amp;h=200&amp;fit=crop" alt="Strategy Sessions" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Strategy Sessions</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=280&amp;h=200&amp;fit=crop" alt="Presentations" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Presentations</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=280&amp;h=200&amp;fit=crop" alt="Judging Panel" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Judging Panel</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=280&amp;h=200&amp;fit=crop" alt="Winners Circle" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Winners Circle</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=280&amp;h=200&amp;fit=crop" alt="Team Photos" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Team Photos</p>
+         </div>
+        </div><!-- Duplicate -->
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=280&amp;h=200&amp;fit=crop" alt="Case Study Rounds" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Case Study Rounds</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=280&amp;h=200&amp;fit=crop" alt="Strategy Sessions" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Strategy Sessions</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=280&amp;h=200&amp;fit=crop" alt="Presentations" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Presentations</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=280&amp;h=200&amp;fit=crop" alt="Judging Panel" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Judging Panel</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=280&amp;h=200&amp;fit=crop" alt="Winners Circle" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Winners Circle</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=280&amp;h=200&amp;fit=crop" alt="Team Photos" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Team Photos</p>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="p-6">
+       <div class="flex items-center gap-2 mb-3"><span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-300">Case Competition</span>
+       </div>
+       <h4 class="text-white font-bold text-2xl mb-2">C-Wrap 2024</h4>
+       <p class="text-gray-300 text-sm mb-4">Business case competition with real-world challenges and industry mentors.</p>
+       <div class="flex items-center justify-between text-sm"><span class="text-gray-400">📅 January 2024</span>
+       </div>
+      </div>
+     </div><!-- Event 4: Mentorship Sessions -->
+     <div onclick="openEventDetails('mentorship')" class="rounded-2xl overflow-hidden bg-slate-800/50 backdrop-blur-sm shadow-md border border-slate-700 cursor-pointer hover:border-blue-500 transition-all">
+      <div class="photo-carousel-container">
+       <div class="photo-carousel">
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=280&amp;h=200&amp;fit=crop" alt="One-on-One Sessions" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">One-on-One Sessions</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=280&amp;h=200&amp;fit=crop" alt="Brainstorming" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Brainstorming</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=280&amp;h=200&amp;fit=crop" alt="Business Planning" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Business Planning</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=280&amp;h=200&amp;fit=crop" alt="Group Mentoring" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Group Mentoring</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=280&amp;h=200&amp;fit=crop" alt="Goal Setting" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Goal Setting</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=280&amp;h=200&amp;fit=crop" alt="Success Stories" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Success Stories</p>
+         </div>
+        </div><!-- Duplicate -->
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=280&amp;h=200&amp;fit=crop" alt="One-on-One Sessions" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">One-on-One Sessions</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=280&amp;h=200&amp;fit=crop" alt="Brainstorming" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Brainstorming</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=280&amp;h=200&amp;fit=crop" alt="Business Planning" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Business Planning</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=280&amp;h=200&amp;fit=crop" alt="Group Mentoring" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Group Mentoring</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=280&amp;h=200&amp;fit=crop" alt="Goal Setting" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Goal Setting</p>
+         </div>
+        </div>
+        <div class="photo-item"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=280&amp;h=200&amp;fit=crop" alt="Success Stories" loading="lazy" onerror="this.style.display='none'" class="w-full h-full object-cover">
+         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <p class="text-white text-xs font-medium">Success Stories</p>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="p-6">
+       <div class="flex items-center gap-2 mb-3"><span class="px-3 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-300">Weekly Program</span>
+       </div>
+       <h4 class="text-white font-bold text-2xl mb-2">Mentorship Sessions</h4>
+       <p class="text-gray-300 text-sm mb-4">Weekly mentorship program connecting students with industry experts.</p>
+       <div class="flex items-center justify-between text-sm"><span class="text-gray-400">📅 Ongoing</span>
+       </div>
+      </div>
+     </div>
+    </div><!-- Stats Section -->
+    <div class="rounded-2xl p-8 text-center bg-gradient-to-br from-blue-600/20 to-purple-600/20 border border-slate-700 mt-12">
+     <h3 class="heading-font text-2xl font-bold text-white mb-8">Our Impact ��</h3>
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div>
+       <p class="text-4xl font-bold gradient-text mb-2">500+</p>
+       <p class="text-gray-300">Students Impacted</p>
+      </div>
+      <div>
+       <p class="text-4xl font-bold gradient-text mb-2">25+</p>
+       <p class="text-gray-300">Events Conducted</p>
+      </div>
+      <div>
+       <p class="text-4xl font-bold gradient-text mb-2">10+</p>
+       <p class="text-gray-300">Startups Incubated</p>
+      </div>
+      <div>
+       <p class="text-4xl font-bold gradient-text mb-2">50+</p>
+       <p class="text-gray-300">Mentors Connected</p>
+      </div>
+     </div>
+    </div>
+   </section>
+  </main><!-- Registration Form Modal -->
+  <div id="registrationModal" class="modal-overlay" onclick="closeRegistration(event)">
+   <div class="modal-content" onclick="event.stopPropagation()">
+    <div class="p-8"><button onclick="closeRegistrationDirect()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center z-10 transition-colors">
+      <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg></button>
+     <h3 class="heading-font text-3xl font-bold text-gray-900 mb-2">Register as Mentor</h3>
+     <p class="text-gray-600 mb-6">Join our mentorship network</p>
+     <form id="mentorForm" onsubmit="submitMentorForm(event)">
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+       <div><label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label> <input type="text" id="fullName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+       </div>
+       <div><label for="passingYear" class="block text-sm font-medium text-gray-700 mb-1">Passing Year *</label> <input type="number" id="passingYear" min="1990" max="2024" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+       </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+       <div><label for="rollNo" class="block text-sm font-medium text-gray-700 mb-1">Roll Number *</label> <input type="text" id="rollNo" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+       </div>
+       <div><label for="branch" class="block text-sm font-medium text-gray-700 mb-1">Branch/Department *</label> <input type="text" id="branch" required placeholder="e.g., B.Tech CSE" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+       </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+       <div><label for="company" class="block text-sm font-medium text-gray-700 mb-1">Current Company *</label> <input type="text" id="company" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+       </div>
+       <div><label for="position" class="block text-sm font-medium text-gray-700 mb-1">Current Position *</label> <input type="text" id="position" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+       </div>
+      </div>
+      <div class="mb-6"><label for="linkedin" class="block text-sm font-medium text-gray-700 mb-1">LinkedIn Profile URL *</label> <input type="url" id="linkedin" required placeholder="https://linkedin.com/in/yourprofile" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+      </div>
+      <div class="flex gap-3"><button type="submit" class="flex-1 py-3 rounded-xl font-semibold text-white transition-all hover:scale-105" style="background: linear-gradient(135deg, #2563EB, #7C3AED);"> Submit Registration </button> <button type="button" onclick="closeRegistrationDirect()" class="px-6 py-3 rounded-xl font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"> Cancel </button>
+      </div>
+     </form>
+    </div>
+   </div>
+  </div><!-- Event Details Modal -->
+  <div id="eventDetailsModal" class="modal-overlay" onclick="closeEventDetails(event)">
+   <div class="modal-content" onclick="event.stopPropagation()">
+    <div class="p-8" id="eventDetailsContent"><!-- Content will be dynamically inserted here -->
+    </div>
+   </div>
+  </div><!-- Footer -->
+  <footer class="py-8 px-4 border-t border-slate-700 bg-slate-900/95">
+   <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-6">
+     <h4 class="text-white font-bold text-lg mb-4">Connect With Us</h4>
+     <div class="flex justify-center gap-6 mb-6"><a href="https://linkedin.com/company/ecell-uol" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-blue-400 transition-colors" title="LinkedIn">
+       <svg class="w-8 h-8" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+       </svg></a> <a href="https://twitter.com/ecell_uol" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-blue-400 transition-colors" title="Twitter">
+       <svg class="w-8 h-8" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+       </svg></a> <a href="https://discord.gg/ecell-uol" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-indigo-400 transition-colors" title="Discord">
+       <svg class="w-8 h-8" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+       </svg></a> <a href="https://instagram.com/ecell_uol" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-pink-400 transition-colors" title="Instagram">
+       <svg class="w-8 h-8" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+       </svg></a>
+     </div>
+     <div class="text-gray-400 text-sm">
+      <p class="mb-2">📧 Email: <a href="mailto:ecell@lkouniv.ac.in" class="text-blue-400 hover:underline">ecell@lkouniv.ac.in</a></p>
+     </div>
+    </div>
+    <div class="text-center border-t border-slate-700 pt-6">
+     <p class="text-gray-400">© 2026 E-Cell University of Lucknow. All rights reserved.</p>
+    </div>
+   </div>
+  </footer>
+  <script>
+    let currentPage = 'alumni';
+
+    // Event data with detailed information
+    const eventData = {
+      nirman: {
+        title: 'Nirman 1.0',
+        subtitle: 'Premier Startup Pitch Competition',
+        date: 'March 15-17, 2024',
+        location: 'University Auditorium, University of Lucknow',
+        participants: '200+',
+        prizePool: '₹50,000',
+        registrationOpen: true,
+        registrationLink: 'https://forms.google.com/nirman2024',
+        description: 'Nirman 1.0 is our flagship startup pitch competition that brings together aspiring entrepreneurs from across the university. This three-day event provides a platform for students to present their innovative business ideas to a panel of industry experts, investors, and successful entrepreneurs.',
+        highlights: [
+          '200+ participants from various departments',
+          '₹50,000 total prize pool',
+          'Mentorship from industry leaders',
+          'Networking opportunities with investors',
+          'Pitch deck workshops and training sessions',
+          'Real-time feedback from expert judges'
+        ],
+        schedule: [
+          { day: 'Day 1', title: 'Registration & Orientation', time: '10:00 AM - 5:00 PM', desc: 'Team registration, pitch deck submission, and orientation session' },
+          { day: 'Day 2', title: 'Preliminary Rounds', time: '9:00 AM - 6:00 PM', desc: '3-minute elevator pitches, shortlisting of top 20 teams' },
+          { day: 'Day 3', title: 'Finals & Awards', time: '10:00 AM - 4:00 PM', desc: '15-minute detailed pitches, Q&A sessions, winner announcement' }
+        ],
+        judges: [
+          'Mr. Rajesh Kumar - Angel Investor & Startup Mentor',
+          'Ms. Priya Singh - CEO, TechVentures India',
+          'Dr. Amit Sharma - Professor of Entrepreneurship, IIM Lucknow'
+        ],
+        prizes: [
+          { position: '1st Prize', amount: '₹25,000', perks: '6 months free coworking space + mentorship' },
+          { position: '2nd Prize', amount: '₹15,000', perks: '3 months free coworking space' },
+          { position: '3rd Prize', amount: '₹10,000', perks: 'Access to startup resources' }
+        ]
+      },
+      esummit: {
+        title: 'E-Summit 2024',
+        subtitle: 'Annual Entrepreneurship Summit',
+        date: 'February 22-24, 2024',
+        location: 'Main Campus, University of Lucknow',
+        participants: '500+',
+        prizePool: '₹1,00,000',
+        registrationOpen: false,
+        registrationLink: '',
+        description: 'E-Summit is our annual flagship event that celebrates entrepreneurship and innovation. This three-day extravaganza features keynote speakers, panel discussions, startup expo, workshops, and networking sessions. It\'s the largest entrepreneurship event in Uttar Pradesh.',
+        highlights: [
+          '500+ attendees from multiple universities',
+          'Keynote speeches from industry titans',
+          'Startup expo with 50+ exhibitors',
+          'Panel discussions on trending topics',
+          '10+ workshops and masterclasses',
+          'Networking dinner with entrepreneurs and investors'
+        ],
+        schedule: [
+          { day: 'Day 1', title: 'Inauguration & Keynotes', time: '9:00 AM - 7:00 PM', desc: 'Opening ceremony, keynote speeches from successful entrepreneurs' },
+          { day: 'Day 2', title: 'Workshops & Expo', time: '9:00 AM - 8:00 PM', desc: 'Startup expo, workshops on various topics, panel discussions' },
+          { day: 'Day 3', title: 'Competitions & Closing', time: '10:00 AM - 6:00 PM', desc: 'Startup competitions, case studies, networking dinner, closing ceremony' }
+        ],
+        speakers: [
+          'Kunal Shah - Founder, CRED',
+          'Ghazal Alagh - Co-founder, Mamaearth',
+          'Ritesh Agarwal - Founder, OYO Rooms'
+        ],
+        workshops: [
+          'Building Your MVP - Product Development Workshop',
+          'Fundraising 101 - How to Approach Investors',
+          'Growth Hacking for Startups',
+          'Legal & Compliance for New Businesses',
+          'Personal Branding for Entrepreneurs'
+        ]
+      },
+      cwrap: {
+        title: 'C-Wrap 2024',
+        subtitle: 'Business Case Competition',
+        date: 'January 10-11, 2024',
+        location: 'Commerce Department, University of Lucknow',
+        participants: '150+',
+        prizePool: '₹30,000',
+        registrationOpen: true,
+        registrationLink: 'https://forms.google.com/cwrap2024',
+        description: 'C-Wrap is an intensive business case competition where teams analyze real-world business challenges and present strategic solutions. This event tests analytical thinking, business acumen, and presentation skills while providing exposure to corporate problem-solving.',
+        highlights: [
+          'Real business cases from leading companies',
+          'Team-based competition format',
+          'Industry mentors for guidance',
+          '₹30,000 prize pool',
+          'Certificate of participation',
+          'Internship opportunities with partner companies'
+        ],
+        schedule: [
+          { day: 'Day 1', title: 'Case Release & Analysis', time: '9:00 AM - 6:00 PM', desc: 'Business case distribution, team analysis sessions, mentor consultation' },
+          { day: 'Day 2', title: 'Presentations & Results', time: '9:00 AM - 5:00 PM', desc: 'Team presentations, Q&A with judges, winner announcement' }
+        ],
+        casePartners: [
+          'Deloitte India',
+          'KPMG Advisory',
+          'PwC Consulting'
+        ],
+        eligibilty: [
+          'Open to all undergraduate and postgraduate students',
+          'Teams of 3-4 members',
+          'Prior business knowledge not mandatory',
+          'Mixed discipline teams encouraged'
+        ]
+      },
+      mentorship: {
+        title: 'Weekly Mentorship Sessions',
+        subtitle: 'Connect with Industry Experts',
+        date: 'Every Saturday, 4:00 PM - 6:00 PM',
+        location: 'E-Cell Office & Online (Hybrid)',
+        participants: 'Ongoing',
+        prizePool: 'Free',
+        registrationOpen: true,
+        registrationLink: 'https://forms.google.com/mentorship-program',
+        description: 'Our weekly mentorship program connects students with experienced professionals and successful alumni. These sessions cover various topics from idea validation to fundraising, providing personalized guidance for your entrepreneurial journey.',
+        highlights: [
+          'Weekly sessions with different mentors',
+          'One-on-one mentorship opportunities',
+          'Group discussions and peer learning',
+          'Free for all students',
+          'Hybrid format (in-person + online)',
+          'Topics covering all aspects of entrepreneurship'
+        ],
+        topics: [
+          { week: 'Week 1', topic: 'Idea Validation & Market Research', mentor: 'Startup Founder' },
+          { week: 'Week 2', topic: 'Building Your MVP', mentor: 'Product Manager' },
+          { week: 'Week 3', topic: 'Fundraising Strategies', mentor: 'Venture Capitalist' },
+          { week: 'Week 4', topic: 'Marketing & Growth Hacking', mentor: 'Growth Expert' }
+        ],
+        benefits: [
+          'Get answers to your startup questions',
+          'Build your professional network',
+          'Learn from real-world experiences',
+          'Receive feedback on your ideas',
+          'Connect with potential co-founders',
+          'Access to exclusive resources'
+        ],
+        howToJoin: [
+          'Fill out the registration form',
+          'Attend the sessions every Saturday',
+          'Prepare questions for mentors',
+          'Engage actively in discussions',
+          'Follow up for one-on-one sessions'
+        ]
+      }
+    };
+
+    function showPage(page) {
+      currentPage = page;
+      const alumniPage = document.getElementById('alumni-page');
+      const galleryPage = document.getElementById('gallery-page');
+      const navAlumni = document.getElementById('nav-alumni');
+      const navGallery = document.getElementById('nav-gallery');
+
+      if (page === 'alumni') {
+        alumniPage.classList.remove('hidden');
+        if (galleryPage) galleryPage.classList.add('hidden');
+        navAlumni.classList.add('active');
+        navGallery.classList.remove('active');
+      } else {
+        alumniPage.classList.add('hidden');
+        if (galleryPage) galleryPage.classList.remove('hidden');
+        navAlumni.classList.remove('active');
+        navGallery.classList.add('active');
+      }
+    }
+
+    function openEventDetails(eventId) {
+      const event = eventData[eventId];
+      if (!event) return;
+
+      let scheduleHTML = '';
+      if (event.schedule) {
+        scheduleHTML = `
+          <div class="mb-6">
+            <h4 class="text-xl font-bold text-gray-900 mb-4">📅 Event Schedule</h4>
+            <div class="space-y-3">
+              ${event.schedule.map(item => `
+                <div class="bg-blue-50 rounded-lg p-4">
+                  <div class="flex items-start gap-3">
+                    <div class="bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-bold">${item.day}</div>
+                    <div class="flex-1">
+                      <p class="font-semibold text-gray-900">${item.title}</p>
+                      <p class="text-sm text-blue-600 mb-1">${item.time}</p>
+                      <p class="text-sm text-gray-600">${item.desc}</p>
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      let additionalInfo = '';
+      if (event.judges) {
+        additionalInfo += `
+          <div class="mb-6">
+            <h4 class="text-xl font-bold text-gray-900 mb-3">👨‍⚖️ Panel of Judges</h4>
+            <ul class="space-y-2">
+              ${event.judges.map(judge => `
+                <li class="flex items-start gap-2 text-gray-700">
+                  <svg class="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  <span>${judge}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        `;
+      }
+
+      if (event.prizes) {
+        additionalInfo += `
+          <div class="mb-6">
+            <h4 class="text-xl font-bold text-gray-900 mb-3">🏆 Prizes & Rewards</h4>
+            <div class="space-y-3">
+              ${event.prizes.map(prize => `
+                <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg p-4 border border-yellow-200">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-bold text-gray-900">${prize.position}</span>
+                    <span class="text-2xl font-bold text-orange-600">${prize.amount}</span>
+                  </div>
+                  <p class="text-sm text-gray-600">${prize.perks}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      if (event.speakers) {
+        additionalInfo += `
+          <div class="mb-6">
+            <h4 class="text-xl font-bold text-gray-900 mb-3">🎤 Guest Speakers</h4>
+            <ul class="space-y-2">
+              ${event.speakers.map(speaker => `
+                <li class="flex items-start gap-2 text-gray-700">
+                  <svg class="w-5 h-5 text-purple-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                  </svg>
+                  <span class="font-medium">${speaker}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        `;
+      }
+
+      if (event.workshops) {
+        additionalInfo += `
+          <div class="mb-6">
+            <h4 class="text-xl font-bold text-gray-900 mb-3">🎯 Workshops</h4>
+            <ul class="space-y-2">
+              ${event.workshops.map(workshop => `
+                <li class="flex items-start gap-2 text-gray-700">
+                  <svg class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  <span>${workshop}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        `;
+      }
+
+      if (event.topics) {
+        additionalInfo += `
+          <div class="mb-6">
+            <h4 class="text-xl font-bold text-gray-900 mb-3">📚 Monthly Topics</h4>
+            <div class="space-y-3">
+              ${event.topics.map(item => `
+                <div class="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-bold text-purple-900">${item.week}</span>
+                    <span class="text-xs bg-purple-600 text-white px-2 py-1 rounded-full">${item.mentor}</span>
+                  </div>
+                  <p class="text-gray-700">${item.topic}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      if (event.benefits) {
+        additionalInfo += `
+          <div class="mb-6">
+            <h4 class="text-xl font-bold text-gray-900 mb-3">✨ Benefits</h4>
+            <ul class="grid md:grid-cols-2 gap-2">
+              ${event.benefits.map(benefit => `
+                <li class="flex items-start gap-2 text-gray-700">
+                  <svg class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  <span class="text-sm">${benefit}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        `;
+      }
+
+      const content = `
+        <button onclick="closeEventDetailsDirect()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center z-10 transition-colors">
+          <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+
+        <div class="mb-6">
+          <div class="inline-block px-4 py-1 rounded-full text-sm font-bold mb-3" style="background: linear-gradient(135deg, #2563EB, #7C3AED); color: white;">
+            ${event.registrationOpen ? '✅ Registration Open' : '🔒 Registration Closed'}
+          </div>
+          <h3 class="heading-font text-3xl font-bold text-gray-900 mb-2">${event.title}</h3>
+          <p class="text-xl text-gray-600 mb-4">${event.subtitle}</p>
+          
+          <div class="grid md:grid-cols-2 gap-4 mb-4">
+            <div class="flex items-center gap-3 bg-blue-50 rounded-lg p-3">
+              <div class="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white text-xl">📅</div>
+              <div>
+                <p class="text-xs text-gray-600">Date</p>
+                <p class="font-semibold text-gray-900">${event.date}</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 bg-purple-50 rounded-lg p-3">
+              <div class="w-10 h-10 rounded-lg bg-purple-600 flex items-center justify-center text-white text-xl">📍</div>
+              <div>
+                <p class="text-xs text-gray-600">Location</p>
+                <p class="font-semibold text-gray-900">${event.location}</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 bg-green-50 rounded-lg p-3">
+              <div class="w-10 h-10 rounded-lg bg-green-600 flex items-center justify-center text-white text-xl">👥</div>
+              <div>
+                <p class="text-xs text-gray-600">Participants</p>
+                <p class="font-semibold text-gray-900">${event.participants}</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 bg-orange-50 rounded-lg p-3">
+              <div class="w-10 h-10 rounded-lg bg-orange-600 flex items-center justify-center text-white text-xl">💰</div>
+              <div>
+                <p class="text-xs text-gray-600">Prize Pool</p>
+                <p class="font-semibold text-gray-900">${event.prizePool}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <h4 class="text-xl font-bold text-gray-900 mb-3">📖 About the Event</h4>
+          <p class="text-gray-700 leading-relaxed">${event.description}</p>
+        </div>
+
+        <div class="mb-6">
+          <h4 class="text-xl font-bold text-gray-900 mb-3">⭐ Event Highlights</h4>
+          <ul class="space-y-2">
+            ${event.highlights.map(highlight => `
+              <li class="flex items-start gap-2 text-gray-700">
+                <svg class="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span>${highlight}</span>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+
+        ${scheduleHTML}
+        ${additionalInfo}
+
+        ${event.registrationOpen ? `
+          <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 border-2 border-blue-200">
+            <h4 class="text-xl font-bold text-gray-900 mb-3">🚀 Ready to Participate?</h4>
+            <p class="text-gray-700 mb-4">Registration is now open! Click the button below to register for this event.</p>
+            <div class="flex gap-3">
+              <a href="${event.registrationLink}" target="_blank" rel="noopener noreferrer" class="flex-1 py-3 px-6 rounded-xl font-semibold text-white text-center transition-all hover:scale-105" style="background: linear-gradient(135deg, #2563EB, #7C3AED);">
+                Register Now
+              </a>
+              <button onclick="closeEventDetailsDirect()" class="px-6 py-3 rounded-xl font-semibold text-gray-700 bg-white hover:bg-gray-100 transition-colors border border-gray-300">
+                Close
+              </button>
+            </div>
+          </div>
+        ` : `
+          <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+            <h4 class="text-xl font-bold text-gray-900 mb-2">📢 Stay Tuned!</h4>
+            <p class="text-gray-700 mb-4">Registration for this event has closed. Follow our social media channels to get notified about upcoming events.</p>
+            <button onclick="closeEventDetailsDirect()" class="w-full py-3 rounded-xl font-semibold text-white transition-all hover:scale-105" style="background: linear-gradient(135deg, #2563EB, #7C3AED);">
+              Close
+            </button>
+          </div>
+        `}
+      `;
+
+      document.getElementById('eventDetailsContent').innerHTML = content;
+      document.getElementById('eventDetailsModal').classList.add('active');
+    }
+
+    function closeEventDetails(event) {
+      if (event.target.id === 'eventDetailsModal') {
+        document.getElementById('eventDetailsModal').classList.remove('active');
+      }
+    }
+
+    function closeEventDetailsDirect() {
+      document.getElementById('eventDetailsModal').classList.remove('active');
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const sunIcon = document.getElementById('sun-icon');
+      const moonIcon = document.getElementById('moon-icon');
+      
+      body.classList.toggle('light-mode');
+      
+      if (body.classList.contains('light-mode')) {
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
+        localStorage.setItem('theme', 'light');
+      } else {
+        sunIcon.classList.add('hidden');
+        moonIcon.classList.remove('hidden');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // Load saved theme preference
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light') {
+        document.body.classList.add('light-mode');
+        document.getElementById('sun-icon').classList.remove('hidden');
+        document.getElementById('moon-icon').classList.add('hidden');
+      }
+    });
+
+    function downloadBrochure() {
+      // Create a comprehensive brochure content
+      const brochureContent = `
+E-CELL UNIVERSITY OF LUCKNOW
+Entrepreneurship Cell - Official Brochure
+================================================
+
+ABOUT US
+--------
+E-Cell University of Lucknow is the premier entrepreneurship cell dedicated to fostering innovation, creativity, and entrepreneurial spirit among students. We provide a platform for aspiring entrepreneurs to transform their ideas into successful ventures.
+
+OUR MISSION
+-----------
+To create an ecosystem that nurtures entrepreneurial thinking, provides mentorship, and connects students with industry leaders and investors.
+
+OUR VISION
+----------
+To make University of Lucknow a hub of innovation and entrepreneurship, producing the next generation of successful entrepreneurs who will shape India's future.
+
+KEY STATISTICS
+--------------
+• 500+ Students Impacted
+• 150+ Active Alumni Mentors
+• 25+ Events Conducted
+• 300+ Mentorship Sessions
+• 10+ Startups Incubated
+• ₹5Cr+ Funding Raised
+• 50+ Industry Mentors
+
+FLAGSHIP EVENTS
+---------------
+
+1. NIRMAN 1.0
+   Premier startup pitch competition with 200+ participants and ₹50,000 prize pool.
+   Features: Pitch presentations, team collaboration, networking, and industry expert judging.
+
+2. E-SUMMIT 2024
+   Three-day annual entrepreneurship summit featuring keynote speakers, startup expo, 
+   panel discussions, and networking opportunities with industry leaders.
+
+3. C-WRAP 2024
+   Business case competition where teams solve real-world business challenges with 
+   guidance from industry mentors and compete for prizes.
+
+4. MENTORSHIP SESSIONS
+   Weekly one-on-one and group mentorship sessions connecting students with successful 
+   alumni and industry experts for personalized guidance.
+
+ALUMNI NETWORK
+--------------
+Our alumni work at leading companies including:
+• Google • Flipkart • Microsoft • Amazon
+• Successful startup founders across India
+• CTOs, Product Leads, and Design Heads at top tech companies
+
+DOMAINS OF EXPERTISE
+--------------------
+• Technology Startups
+• EdTech & Online Learning
+• FinTech & Blockchain
+• AgriTech & IoT
+• LegalTech & B2B SaaS
+• Product Development
+• UX Design & Branding
+• Fundraising & Investment
+
+PROGRAMS & INITIATIVES
+----------------------
+1. Startup Incubation Program
+2. Idea Validation Workshops
+3. Pitch Deck Preparation
+4. Funding Roadmap Guidance
+5. Legal & Compliance Support
+6. Marketing & Growth Strategies
+7. Technical Development Support
+8. Networking Events
+
+HOW TO GET INVOLVED
+-------------------
+Students:
+• Attend our events and workshops
+• Join mentorship programs
+• Participate in competitions
+• Connect with alumni mentors
+• Start your entrepreneurial journey
+
+Alumni:
+• Register as a mentor
+• Share your expertise
+• Support student startups
+• Participate in events
+• Give back to the community
+
+CONTACT US
+----------
+Email: ecell@lkouniv.ac.in
+LinkedIn: linkedin.com/company/ecell-uol
+Twitter: @ecell_uol
+Instagram: @ecell_uol
+Discord: discord.gg/ecell-uol
+
+University of Lucknow
+Uttar Pradesh, India
+
+================================================
+© 2026 E-Cell University of Lucknow
+All Rights Reserved
+`;
+
+      // Create a blob and download it
+      const blob = new Blob([brochureContent], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'E-Cell_UoL_Brochure.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      
+      showAlert('E-Cell brochure downloaded successfully! Check your downloads folder.');
+    }
+
+    function showAlert(message) {
+      const alertDiv = document.createElement('div');
+      alertDiv.className = 'alert-box';
+      alertDiv.innerHTML = `
+        <div class="flex items-start gap-3">
+          <div class="flex-shrink-0">
+            <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-900 mb-1">Success!</h4>
+            <p class="text-gray-700 text-sm">${message}</p>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(alertDiv);
+      
+      setTimeout(() => {
+        alertDiv.style.animation = 'slideIn 0.3s ease-out reverse';
+        setTimeout(() => alertDiv.remove(), 300);
+      }, 4000);
+    }
+
+    function requestMentorship(mentorName) {
+      showAlert(`Your mentorship request has been sent to ${mentorName}. We will connect you soon!`);
+    }
+
+    function openRegistrationForm() {
+      document.getElementById('registrationModal').classList.add('active');
+    }
+
+    function closeRegistration(event) {
+      if (event.target.id === 'registrationModal') {
+        document.getElementById('registrationModal').classList.remove('active');
+      }
+    }
+
+    function closeRegistrationDirect() {
+      document.getElementById('registrationModal').classList.remove('active');
+    }
+
+    function submitMentorForm(event) {
+      event.preventDefault();
+      closeRegistrationDirect();
+      showAlert('Your registration has been submitted successfully! You will be notified after verification.');
+      document.getElementById('mentorForm').reset();
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c088e9a07080868',t:'MTc2ODg0OTAzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
